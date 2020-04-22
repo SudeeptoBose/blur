@@ -1,0 +1,174 @@
+void blur(int height, int width, RGBTRIPLE image[height][width])
+{
+    RGBTRIPLE image_copy[height][width];
+    int totalRed = 0;
+    int totalGreen = 0;
+    int totalBlue = 0;
+
+    // Make Image copy
+    for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    image_copy[i][j] = image[i][j];
+                }
+            }
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            // Condition for Top Edge
+            if ((i == 0) && (j > 0) && (j < (width -1)))
+            {
+              for (int row = i; row < (row + 2); row++)
+              {
+                  for (int column = j - 1; column <= (column + 2); column++)
+                  {
+                      totalRed += image_copy[row][column].rgbtRed;
+                      totalGreen += image_copy[row][column].rgbtGreen;
+                      totalBlue += image_copy[row][column].rgbtBlue;
+                  }
+              }
+
+              image[i][j].rgbtRed = round(totalRed / 6.0);
+              image[i][j].rgbtGreen = round(totalGreen / 6.0);
+              image[i][j].rgbtBlue = round(totalBlue / 6.0);
+            }
+            // Condition for Bottom Edge
+            if ((i == (height - 1)) && (j > 0) && (j < (width - 1)))
+            {
+                for (int row = i - 1; row < height ; row++)
+                {
+                    for (int column = j - 1; column <= (column + 2); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+
+                image[i][j].rgbtRed = round(totalRed / 6.0);
+                image[i][j].rgbtGreen = round(totalGreen / 6.0);
+                image[i][j].rgbtBlue = round(totalBlue / 6.0);
+            }
+            // Condition for Left Edge
+            if ((i > 0) && (i < (height - 1)) && (j == 0 ))
+            {
+                for (int row = i - 1; row <= (row + 2) ; row++ )
+                {
+                    for (int column = j; column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+
+                image[i][j].rgbtRed = round(totalRed / 6.0);
+                image[i][j].rgbtGreen = round(totalGreen / 6.0);
+                image[i][j].rgbtBlue = round(totalBlue / 6.0);
+            }
+            // Condition for the Right Edge
+            if ((i > 0) && (i < (height - 1)) && (j == width))
+            {
+                for (int row = i - 1; row <=(row + 2); row++ )
+                {
+                    for (int column = j - 1; column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+
+                image[i][j].rgbtRed = round(totalRed / 6.0);
+                image[i][j].rgbtGreen = round(totalGreen / 6.0);
+                image[i][j].rgbtBlue = round(totalBlue / 6.0);
+            }
+            // Middle pixels
+            if ((i > 0) && (i < (height - 1)) && (j > 0) && (j < (width - 1)))
+            {
+                // Define a box
+                for (int row = i - 1; row <= (row + 2); row++ ){
+                    for (int column = j - 1; column <= (column + 2); column++){
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+
+                // Calculate average and put in original image
+                image[i][j].rgbtRed = round(totalRed / 9.0);
+                image[i][j].rgbtGreen = round(totalGreen / 9.0);
+                image[i][j].rgbtBlue = round(totalBlue / 9.0);
+            }
+            // Top left corner
+            if ((i == 0) && (j == 0))
+            {
+                for (int row = 0; row <= (row + 1); row++)
+                {
+                    for (int column = 0; column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+                image[i][j].rgbtRed = round(totalRed / 4.0);
+                image[i][j].rgbtGreen = round(totalGreen / 4.0);
+                image[i][j].rgbtBlue = round(totalBlue / 4.0);
+            }
+            // Top right corner
+            if ((i == 0) && (j == width - 1))
+            {
+                for (int row = i; row <= (row + 1); row++)
+                {
+                    for (int column = j - 1; column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+                image[i][j].rgbtRed = round(totalRed / 4.0);
+                image[i][j].rgbtGreen = round(totalGreen / 4.0);
+                image[i][j].rgbtBlue = round(totalBlue / 4.0);
+            }
+            // Bottom left corner
+            if ((i == (height - 1)) && (j == 0))
+            {
+                for (int row = (i - 1); row <= (row + 1); row++)
+                {
+                    for (int column = j; column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+                image[i][j].rgbtRed = round(totalRed / 4.0);
+                image[i][j].rgbtGreen = round(totalGreen / 4.0);
+                image[i][j].rgbtBlue = round(totalBlue / 4.0);
+            }
+            // Bottom right corner
+            if ((i == (height - 1)) && (j == (width - 1)))
+            {
+                for (int row = (i - 1); row <= (row + 1); row++)
+                {
+                    for (int column = (j - 1); column <= (column + 1); column++)
+                    {
+                        totalRed += image_copy[row][column].rgbtRed;
+                        totalGreen += image_copy[row][column].rgbtGreen;
+                        totalBlue += image_copy[row][column].rgbtBlue;
+                    }
+                }
+                image[i][j].rgbtRed = round(totalRed / 4.0);
+                image[i][j].rgbtGreen = round(totalGreen / 4.0);
+                image[i][j].rgbtBlue = round(totalBlue / 4.0);
+            }
+        }
+    }
+
+    return;
+}
