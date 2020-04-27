@@ -56,7 +56,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Condition for Left Edge
             else if ((i > 0) && (i < (height - 1)) && (j == 0 ))
             {
-                for (int row = i - 1; row <= (i + 2) ; row++ )
+                for (int row = i - 1; row <= (i + 1) ; row++ )
                 {
                     for (int column = j; column <= (j + 1); column++)
                     {
@@ -71,9 +71,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 image[i][j].rgbtBlue = round(totalBlue / 6.0);
             }
             // Condition for the Right Edge
-            else if ((i > 0) && (i < (height - 1)) && (j == width))
+            else if ((i > 0) && (i < (height - 1)) && (j == width - 1))
             {
-                for (int row = i - 1; row <(i + 2); row++)
+                for (int row = i - 1; row <=(i + 1); row++)
                 {
                     for (int column = j - 1; column < (j + 1); column++)
                     {
@@ -90,9 +90,10 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Middle pixels
             else if ((i > 0) && (i < (height - 1)) && (j > 0) && (j < (width - 1)))
             {
-                // Define a box
-                for (int row = i - 1; row <= (row + 2); row++ ){
-                    for (int column = j - 1; column <= (column + 2); column++){
+                for (int row = i - 1; row <= (i + 2); row++ )
+                {
+                    for (int column = j - 1; column <= (j + 2); column++)
+                    {
                         totalRed += image_copy[row][column].rgbtRed;
                         totalGreen += image_copy[row][column].rgbtGreen;
                         totalBlue += image_copy[row][column].rgbtBlue;
@@ -107,7 +108,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Top left corner
             else if ((i == 0) && (j == 0))
             {
-                for (int row = 0; row <= (row + 1); row++)
+                for (int row = 0; row <= (i + 1); row++)
                 {
                     for (int column = 0; column <= 1; column++)
                     {
@@ -123,9 +124,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Top right corner
             else if ((i == 0) && (j == width - 1))
             {
-                for (int row = i; row <= (row + 1); row++)
+                for (int row = i; row <= (i + 1); row++)
                 {
-                    for (int column = j - 1; column <= (column + 1); column++)
+                    for (int column = j - 1; column <= (j + 1); column++)
                     {
                         totalRed += image_copy[row][column].rgbtRed;
                         totalGreen += image_copy[row][column].rgbtGreen;
@@ -139,9 +140,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Bottom left corner
             else if ((i == (height - 1)) && (j == 0))
             {
-                for (int row = (i - 1); row <= (row + 1); row++)
+                for (int row = (i - 1); row <= (i + 1); row++)
                 {
-                    for (int column = j; column <= (column + 1); column++)
+                    for (int column = j; column <= (j + 1); column++)
                     {
                         totalRed += image_copy[row][column].rgbtRed;
                         totalGreen += image_copy[row][column].rgbtGreen;
@@ -155,9 +156,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // Bottom right corner
             else if ((i == (height - 1)) && (j == (width - 1)))
             {
-                for (int row = (i - 1); row <= (row + 1); row++)
+                for (int row = (i - 1); row <= (i + 1); row++)
                 {
-                    for (int column = (j - 1); column <= (column + 1); column++)
+                    for (int column = (j - 1); column <= (j + 1); column++)
                     {
                         totalRed += image_copy[row][column].rgbtRed;
                         totalGreen += image_copy[row][column].rgbtGreen;
